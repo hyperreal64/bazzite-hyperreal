@@ -3,7 +3,7 @@
 set -ouex pipefail
 
 # Install packages
-dnf5 install -y atop borgbackup borgmatic btrfs-assistant nmap node-exporter yakuake
+dnf5 install -y atop borgbackup borgmatic btrfs-assistant firefox nmap node-exporter yakuake
 
 # Install VSCodium
 VSCODIUM_RPM_URL=$(curl --silent "https://api.github.com/repos/VSCodium/vscodium/releases/latest" | grep "browser_download_url" | grep "x86_64.rpm" | cut -d : -f 2,3 | tr -d '" ' | head -n 1)
