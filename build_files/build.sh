@@ -2,23 +2,23 @@
 
 set -ouex pipefail
 
-### Install packages
+# Install packages
+dnf5 install -y atop borgbackup borgmatic btrfs-assistant nmap node-exporter yakuake
 
-# Packages can be installed from any enabled yum repo on the image.
-# RPMfusion repos are available by default in ublue main images
-# List of rpmfusion packages can be found here:
-# https://mirrors.rpmfusion.org/mirrorlist?path=free/fedora/updates/39/x86_64/repoview/index.html&protocol=https&redirect=1
+# Install VSCodium
+VSCODIUM_RPM_URL=$(curl --silent "https://api.github.com/repos/VSCodium/vscodium/releases/latest" | grep "browser_download_url" | grep "x86_64.rpm" | cut -d : -f 2,3 | tr -d '" ' | head -n 1)
+dnf5 install -y $VSCODIUM_RPM_URL
 
-# this installs a package from fedora repos
-dnf5 install -y tmux 
-
-# Use a COPR Example:
-#
-# dnf5 -y copr enable ublue-os/staging
-# dnf5 -y install package
-# Disable COPRs so they don't end up enabled on the final image:
-# dnf5 -y copr disable ublue-os/staging
-
-#### Example for enabling a System Unit File
-
+# Enable services
+systemctl enable atop.service
+systemctl enable atopacct.service
+systemctl enable atop-rotate.timer
 systemctl enable podman.socket
+systemctl enable prometheus-node-exporter.service
+
+# Disable services
+systemctl disable bluetooth.service
+systemctl disable cups.service
+systemctl disable zfs-mount.service
+systemctl disable zfs-share.service
+systemctl disable zfs-zed.service
