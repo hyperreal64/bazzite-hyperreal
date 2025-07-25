@@ -3,11 +3,23 @@
 set -ouex pipefail
 
 # Install packages
-dnf5 install -y atop borgbackup borgmatic btrfs-assistant firefox kpeoplevcard nmap node-exporter yakuake
+dnf5 install -y \
+	atop \
+	borgbackup \
+	borgmatic \
+	btrfs-assistant \
+	firefox \
+	kpeoplevcard \
+	nmap \
+	node-exporter \
+	xdg-desktop-portal \
+	xdg-desktop-portal-gtk \
+	xdg-desktop-portal-kde \
+	yakuake
 
 # Install VSCodium
 VSCODIUM_RPM_URL=$(curl --silent "https://api.github.com/repos/VSCodium/vscodium/releases/latest" | grep "browser_download_url" | grep "x86_64.rpm" | cut -d : -f 2,3 | tr -d '" ' | head -n 1)
-dnf5 install -y $VSCODIUM_RPM_URL
+dnf5 install -y "$VSCODIUM_RPM_URL"
 
 # Enable services
 systemctl enable atop.service
