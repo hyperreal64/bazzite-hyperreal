@@ -8,6 +8,7 @@ dnf5 install -y \
 	borgbackup \
 	borgmatic \
 	btrfs-assistant \
+	guestfs-tools \
 	firefox \
 	kpeoplevcard \
 	nmap \
